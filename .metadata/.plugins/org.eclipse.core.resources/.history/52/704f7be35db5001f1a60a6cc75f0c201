@@ -1,0 +1,10 @@
+package services;
+
+import ClassesPrincipaux.Client;
+
+public interface ClientService {
+	void insererClient(Client client);
+    Client consulterClient(int cin);
+    void modifierClient(Client client);
+    void supprimerClient(int cin); 
+}

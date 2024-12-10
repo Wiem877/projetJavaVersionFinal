@@ -1,0 +1,46 @@
+package services;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import ClassesPrincipaux.CompteBancaire;
+import ClassesPrincipaux.CompteCourant;
+import ClassesPrincipaux.CompteEpargne;
+
+public class OperationServiceImpl implements OperationService{
+	private Connection connection;
+    public OperationServiceImpl() {
+        try {
+            // Connexion à la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/banque", "user", "password");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	public boolean retrait(CompteBancaire compte, float montant) {
+		String query = "UPDATE compte SET solde = solde - ? WHERE numCompte = ? AND solde >= ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setDouble(1, montant);
+            stmt.setInt(2, compte.getNumCompte());
+            stmt.setDouble(3, montant);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+
+    public void versement(CompteBancaire compte, float montant) {
+        compte.setSolde(compte.getSolde() + montant);
+    }
+
+    public void virement(CompteBancaire source, CompteBancaire destination, float montant) {
+        retrait(source, montant);
+        versement(destination, montant);
+    }
+    }
+

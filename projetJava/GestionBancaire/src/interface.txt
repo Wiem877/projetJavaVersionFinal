@@ -1,0 +1,35 @@
+package gestion;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class Interface_Swing {
+	public static void main(String[] args)
+	{
+		JFrame frame = new JFrame("Gestion bancaire"); //creation de la fenetre 
+		frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        JLabel label = new JLabel("Gestion des clients");
+        JButton b11 = new JButton("Creer client");
+        JButton b12 = new JButton("consulter client");
+        JButton b13 = new JButton("Modifier client");
+        b11.setBounds(50, 150, 150, 30);
+        frame.add(b11);
+        b12.setBounds(50, 150, 150, 30);
+        frame.add(b12);
+        b13.setBounds(50, 150, 150, 30);
+        frame.add(b13);
+        JLabel label1 = new JLabel("Gestion des comptes");
+        JButton b21 = new JButton("Creer client");
+        JButton b22 = new JButton("consulter client");
+        JButton b23= new JButton("Modifier client");
+        JButton b24= new JButton("Compte");
+        b21.setBounds(50, 150, 150, 30);
+        frame.add(b21);
+        b22.setBounds(50, 150, 150, 30);
+        frame.add(b22);
+        b23.setBounds(50, 150, 150, 30);
+        frame.add(b23);
+	}
+	
+}

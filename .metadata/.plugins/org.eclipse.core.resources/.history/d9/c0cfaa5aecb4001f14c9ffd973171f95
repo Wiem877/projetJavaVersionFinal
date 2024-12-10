@@ -1,0 +1,8 @@
+package services;
+
+public interface CompteService {
+	void creerCompte(CompteBancaire compte);
+    Compte consulterCompte(int numero);
+    void modifierCompte(CompteBancaire compte);
+    void supprimerCompte(int numero);
+}

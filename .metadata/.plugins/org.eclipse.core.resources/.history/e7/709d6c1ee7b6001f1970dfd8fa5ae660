@@ -1,0 +1,69 @@
+package Interfaces;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import services.CompteServiceImpl;
+
+public class SupprimerCompte extends JFrame{
+	private JTextField numCompteField;
+	private JButton suppButton;
+	 public SupprimerCompte() {
+	        setTitle("Supprimer mon compte");
+	        setSize(400, 300);
+	        setLocationRelativeTo(null);
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        
+	        // Création des composants de l'interface
+	        JPanel panel = new JPanel();
+	        panel.setLayout(new GridLayout(4, 2, 10, 10));
+
+	        JLabel numCompteLabel = new JLabel("Numéro de compte :");
+	        numCompteField = new JTextField();
+	        panel.add(numCompteLabel);
+	        panel.add(numCompteField);
+	        panel.add(suppButton);
+	        add(panel);
+	        suppButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                AbstractButton resultArea;
+					try {
+	                    // Récupérer le numéro de compte depuis le champ de texte
+	                    int numCompte = Integer.parseInt(numCompteField.getText());
+	                    CompteServiceImpl service = new CompteServiceImpl();
+
+	                    // Vérifier si le compte existe
+	                    if (!service.compteExiste(numCompte)) {
+	                        resultArea.setText("Le compte avec le numéro " + numCompte + " n'existe pas.");
+	                        return;
+	                    }
+
+	                    // Supprimer le compte
+	                    boolean success = service.supprimerCompte(numCompte);
+	                    if (success) {
+	                        resultArea.setText("Le compte a été supprimé avec succès.");
+	                    } else {
+	                        resultArea.setText("Erreur lors de la suppression du compte.");
+	                    }
+	                } catch (NumberFormatException ex) {
+	                    resultArea.setText("Veuillez entrer un numéro de compte valide.");
+	                } catch (Exception ex) {
+	                    resultArea.setText("Erreur : " + ex.getMessage());
+	                }
+	            }
+	        });
+}
+	 }

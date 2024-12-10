@@ -1,0 +1,29 @@
+package Interfaces;
+
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class ClientInterface extends JFrame{
+	
+	public ClientInterface()
+	{
+		setTitle("Bienvenu cher client");
+	    setSize(300, 200);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setLocationRelativeTo(null);
+	    setLayout(new GridLayout(4, 2, 10, 10));
+
+	    JButton loginButton = new JButton("Login");
+	    JButton loginButton = new JButton("S'inscrire");
+	    JLabel statusLabel = new JLabel("", JLabel.CENTER);
+	    statusLabel.setForeground(Color.RED);
+	    add(mainPanel);
+        setVisible(true);
+	}
+}

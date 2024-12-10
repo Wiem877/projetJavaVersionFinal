@@ -1,0 +1,46 @@
+package services;
+
+import java.sql.Connection;
+
+import ClassesPrincipaux.CompteBancaire;
+import ClassesPrincipaux.CompteCourant;
+import ClassesPrincipaux.CompteEpargne;
+
+public class OperationServiceImpl implements OperationService{
+	private Connection connection;
+    public OperationServiceImpl() {
+        try {
+            // Connexion à la base de données
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/banque", "user", "password");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	public void retrait(CompteBancaire compte, float montant) {
+        if (compte instanceof CompteCourant) {
+            CompteCourant courant = (CompteCourant) compte;
+            if (compte.getSolde() - montant >= -courant.getDecouvert()) {
+                compte.setSolde((float)(compte.getSolde() - montant));
+            } else {
+                throw new RuntimeException("Fonds insuffisants !");
+            }
+        } else if (compte instanceof CompteEpargne) {
+            if (compte.getSolde() >= montant) {
+                compte.setSolde((float)(compte.getSolde() - montant));
+            } else {
+                throw new RuntimeException("Fonds insuffisants !");
+            }
+        }
+    }
+
+    public void versement(CompteBancaire compte, float montant) {
+        compte.setSolde(compte.getSolde() + montant);
+    }
+
+    public void virement(CompteBancaire source, CompteBancaire destination, float montant) {
+        retrait(source, montant);
+        versement(destination, montant);
+    }
+    }
+

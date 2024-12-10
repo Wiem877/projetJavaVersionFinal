@@ -1,0 +1,80 @@
+package services;
+
+import java.io.FileInputStream;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
+import ClassesPrincipaux.Client;
+
+public class ClientServiceImpl implements ClientService{
+	private static final String URL = "jdbc:mysql://localhost:3306/votre_base"; // Remplacez par votre URL
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
+
+    @Override
+    public void insererClient(Client client) {
+        String sql = "INSERT INTO clients (cin, nom, prenom, telephone) VALUES (?, ?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, client.getCin());
+            statement.setString(2, client.getNom());
+            statement.setString(3, client.getPrenom());
+            statement.setInt(4, client.getTel());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Client consulterClient(int cin) {
+        String sql = "SELECT * FROM clients WHERE cin = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, cin);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new Client(
+                        resultSet.getString("cin"),
+                        resultSet.getString("nom"),
+                        resultSet.getString("prenom"),
+                        resultSet.getString("telephone")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void mettreAJourClient(Client client) {
+        String sql = "UPDATE clients SET nom = ?, prenom = ?, telephone = ? WHERE cin = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, client.getNom());
+            statement.setString(2, client.getPrenom());
+            statement.setString(3, client.getTelephone());
+            statement.setString(4, client.getCin());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void supprimerClient(String cin) {
+        String sql = "DELETE FROM clients WHERE cin = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, cin);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

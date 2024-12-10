@@ -1,0 +1,38 @@
+package Interfaces;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+public class InterfacePrincipal extends JFrame{
+	public InterfacePrincipal()
+	{
+		setTitle("Bienvenu dans la gestion bancaire ");
+	    setSize(400, 300);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setLocationRelativeTo(null); 
+		JPanel mainPanel = new JPanel();
+	    mainPanel.setLayout(new BorderLayout());
+	    JLabel title = new JLabel("bienvenu!", SwingConstants.CENTER);
+	    title.setFont(new Font("Arial", Font.BOLD, 24)); // Police et taille du titre
+	    mainPanel.add(title, BorderLayout.NORTH);
+	    // Ajouter un panneau pour les labels et boutons
+	    JPanel contentPanel = new JPanel();
+	    contentPanel.setLayout(new GridLayout(2, 2, 10, 10));
+	    JButton button1 = new JButton("Client");
+	    JButton button2 = new JButton("Admin");
+	    contentPanel.add(button1);
+	    contentPanel.add(button2);
+	    mainPanel.add(contentPanel, BorderLayout.CENTER);
+
+	    // Ajouter le conteneur principal à la fenêtre
+	    add(mainPanel);
+	    setVisible(true);
+	}
+}

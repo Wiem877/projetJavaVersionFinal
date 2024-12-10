@@ -1,0 +1,9 @@
+package services;
+
+import ClassesPrincipaux.CompteBancaire;
+
+public interface OperationService {
+	void retrait(CompteBancaire compte, double montant);
+	void versement(CompteBancaire compte, double montant);
+	void virement(CompteBancaire source, CompteBancaire destination, double montant)
+}

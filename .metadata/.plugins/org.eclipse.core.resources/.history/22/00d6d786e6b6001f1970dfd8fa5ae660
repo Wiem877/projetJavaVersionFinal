@@ -1,0 +1,10 @@
+package services;
+
+import ClassesPrincipaux.CompteBancaire;
+
+public interface CompteService {
+	void creerCompte(CompteBancaire compte);
+    CompteBancaire consulterCompte(int numero);
+    void modifierCompte(CompteBancaire compte);
+    void supprimerCompte(int numero);
+}

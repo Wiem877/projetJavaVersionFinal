@@ -1,0 +1,79 @@
+package services;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import ClassesPrincipaux.CompteBancaire;
+import ClassesPrincipaux.CompteCourant;
+import ClassesPrincipaux.CompteEpargne;
+
+public class CompteServiceImpl implements CompteService{
+	private static final String URL = "jdbc:mysql://localhost:3306/gestion"; // Remplacez par votre URL
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
+    public CompteServiceImpl()
+    {
+    	
+    }
+	public void creerCompte(CompteBancaire compte) {
+        String query = "INSERT INTO compte VALUES (?, ?, ?, ?, ?, ?)";
+        //Connection connection;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+               statement.setInt(1, compte.getNumCompte());
+               statement.setInt(2, compte.getCinClient());
+               statement.setFloat(3, compte.getSolde());
+               statement.setString(4, compte.getPassword());
+               statement.setDate(5, java.sql.Date.valueOf(compte.getDateOuverture()));
+               if(compte instanceof CompteCourant )
+               {
+            	   statement.setDouble(6, ((CompteCourant)compte).getDecouvert());
+               }
+               if(compte instanceof CompteEpargne )
+               {
+            	   statement.setDouble(6, ((CompteEpargne)compte).getTauxInteret());
+               }
+               statement.executeUpdate();
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+    }
+	public CompteBancaire consulterCompte(int numCompte) {
+        String query = "SELECT * FROM compte WHERE numCompte = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, numCompte);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return new CompteBancaire(rs.getInt("numCompte"),rs.getInt("numCin") ,rs.getString("password"),rs.getFloat("solde"),rs.getDate("getDateOuverture").toLocalDate());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+	public void modifierCompte(CompteBancaire compte) {
+        String query = "UPDATE comptes SET solde = ? WHERE id = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            stmt.setDouble(1, compte.getSolde());
+            stmt.setInt(2, compte.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	public void supprimerCompte(int numero) {
+        String query = "DELETE FROM comptes WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, numero);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

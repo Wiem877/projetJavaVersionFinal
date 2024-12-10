@@ -1,0 +1,24 @@
+package Interfaces;
+
+import javax.swing.JFrame;
+
+public class ClientInterface extends JFrame{
+	public ClientInterface()
+	{
+		setTitle("Login");
+	    setSize(300, 200);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setLocationRelativeTo(null);
+	    setLayout(new GridLayout(4, 2, 10, 10));
+
+	    JLabel cinLabel = new JLabel("CIN:");
+	    cinField = new JTextField();
+
+	    JLabel passwordLabel = new JLabel("Mot de Passe:");
+	    passwordField = new JPasswordField();
+
+	    JButton loginButton = new JButton("Login");
+	    statusLabel = new JLabel("", JLabel.CENTER);
+	    statusLabel.setForeground(Color.RED);
+	}
+}

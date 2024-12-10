@@ -1,0 +1,24 @@
+package ClassesPrincipaux;
+
+public class User {
+	    
+	    boolean isAuthenticated = false;
+
+        String query = "SELECT * FROM compte WHERE numCompte = ? AND password = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, numCompte);
+            statement.setString(2, password); // Assurez-vous que le mot de passe est déjà haché si nécessaire
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                // Si un résultat est trouvé, l'utilisateur est authentifié
+                isAuthenticated = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isAuthenticated;
+    }
+}
+

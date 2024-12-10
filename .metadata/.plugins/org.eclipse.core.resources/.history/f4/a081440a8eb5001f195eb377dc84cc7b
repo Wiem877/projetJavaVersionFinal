@@ -1,0 +1,14 @@
+package ClassesPrincipaux;
+
+public class User {
+	 private String username;
+	    private String password;
+
+	    public boolean authentifier(int numCompte, String password) {
+	        // Vérifie les identifiants
+	        return this.username.equals(username) && this.password.equals(password);
+	    }
+	    /*public void enregistrerUtilisateur(String username, String password) {
+	        utilisateurs.put(username, password);*/
+	    }
+

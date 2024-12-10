@@ -1,0 +1,30 @@
+package Interfaces;
+
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class SupprimerCompte extends JFrame{
+	private JTextField numCompteField;
+	private JButton suppButton;
+	 public SupprimerCompte() {
+	        setTitle("Supprimer mon compte");
+	        setSize(400, 300);
+	        setLocationRelativeTo(null);
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        
+	        // Création des composants de l'interface
+	        JPanel panel = new JPanel();
+	        panel.setLayout(new GridLayout(4, 2, 10, 10));
+
+	        JLabel numCompteLabel = new JLabel("Numéro de compte :");
+	        numCompteField = new JTextField();
+	        panel.add(numCompteLabel);
+	        panel.add(numCompteField);
+	        panel.add(suppButton);
+}
+	 }

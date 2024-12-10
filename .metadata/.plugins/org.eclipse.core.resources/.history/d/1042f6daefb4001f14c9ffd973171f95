@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module ProjetJava2 {
+	requires java.desktop;
+}

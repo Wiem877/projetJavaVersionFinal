@@ -1,0 +1,7 @@
+package services;
+
+import ClassesPrincipaux.CompteBancaire;
+
+public interface OperationService {
+	void retrait(CompteBancaire compte, double montant);
+}

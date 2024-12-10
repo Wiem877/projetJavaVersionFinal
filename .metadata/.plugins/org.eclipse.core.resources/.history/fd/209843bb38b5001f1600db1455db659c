@@ -1,0 +1,88 @@
+package Interfaces;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import services.ClientServiceImpl;
+
+public class CreationClient extends JFrame{
+	ClientServiceImpl clientService = new ClientServiceImpl(); // Instanciez le service
+
+    setTitle("Ajouter un Client");
+    setSize(400, 300);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLayout(new GridLayout(6, 2, 10, 10));
+
+    // Labels et champs de texte
+    add(new JLabel("CIN :"));
+    cinField = new JTextField();
+    add(cinField);
+
+    add(new JLabel("Nom :"));
+    nomField = new JTextField();
+    add(nomField);
+
+    add(new JLabel("Prénom :"));
+    prenomField = new JTextField();
+    add(prenomField);
+
+    add(new JLabel("Téléphone :"));
+    telephoneField = new JTextField();
+    add(telephoneField);
+
+    // Bouton pour soumettre
+    JButton submitButton = new JButton("Ajouter Client");
+    add(submitButton);
+
+    // Espace vide pour aligner les éléments
+    add(new JLabel());
+
+    // Gestionnaire d'événements
+    submitButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	clientService.insererClient();
+        }
+    });
+}
+
+private void ajouterClient() {
+    try {
+        int cin = Integer.parseInt(cinField.getText());
+        String nom = nomField.getText();
+        String prenom = prenomField.getText();
+        String telephone = telephoneField.getText();
+
+        // Validation des champs
+        if (nom.isEmpty() || prenom.isEmpty() || telephone.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tous les champs sont obligatoires.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Création d'un objet Client
+        Client client = new Client((int)cin, nom, prenom,(int) telephone);
+
+        // Appel au service pour enregistrer le client
+        ClientServiceImpl.insererClient(client);
+
+        JOptionPane.showMessageDialog(this, "Client ajouté avec succès !");
+        
+        // Réinitialisation des champs
+        cinField.setText("");
+        nomField.setText("");
+        prenomField.setText("");
+        telephoneField.setText("");
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "CIN doit être un nombre.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> {
+        new ClientForm().setVisible(true);
+    });
+}
+}

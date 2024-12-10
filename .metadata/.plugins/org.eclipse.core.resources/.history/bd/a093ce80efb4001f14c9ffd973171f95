@@ -1,0 +1,33 @@
+package services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ClassesPrincipaux.Client;
+
+public class ClientServiceImpl implements ClientService{
+	private List<Client> clients = new ArrayList<>(); // Simuler une base de données
+
+    @Override
+    public void creerClient(Client client) {
+        clients.add(client);
+    }
+
+    @Override
+    public Client consulterClient(int cin) {
+        return clients.stream()
+                      .filter(c -> c.getCin()==cin)
+                      .findFirst()
+                      .orElse(null);
+    }
+
+    @Override
+    public void modifierClient(Client client) {
+        Client existant = consulterClient(client.getCin());
+        if (existant != null) {
+            existant.setNom(client.getNom());
+            existant.setPrenom(client.getPrenom());
+            existant.setTel(client.getTel());
+        }
+    }
+}

@@ -1,0 +1,8 @@
+package Interfaces;
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+public class SupprimerCompte extends JFrame{
+	private JTextField numCompteField;
+}

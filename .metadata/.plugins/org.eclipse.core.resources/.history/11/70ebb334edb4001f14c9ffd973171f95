@@ -1,0 +1,30 @@
+package services;
+
+public class OperationServiceImpl implements OperationService{
+	public void retrait(CompteBancaire compte, double montant) {
+        if (compteBancaire instanceof CompteCourant) {
+            CompteCourant courant = (CompteCourant) compte;
+            if (compte.getSolde() - montant >= -courant.getDecouvert()) {
+                compte.setSolde(compte.getSolde() - montant);
+            } else {
+                throw new RuntimeException("Fonds insuffisants !");
+            }
+        } else if (compte instanceof CompteEpargne) {
+            if (compte.getSolde() >= montant) {
+                compte.setSolde(compte.getSolde() - montant);
+            } else {
+                throw new RuntimeException("Fonds insuffisants !");
+            }
+        }
+    }
+
+    public void versement(Compte compte, double montant) {
+        compte.setSolde(compte.getSolde() + montant);
+    }
+
+    public void virement(Compte source, Compte destination, double montant) {
+        retrait(source, montant);
+        versement(destination, montant);
+    }
+}
+}
